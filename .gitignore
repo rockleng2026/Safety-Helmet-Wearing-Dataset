@@ -5,8 +5,7 @@ __pycache__/
 dist/
 build/
 
-# Model files (too large, use Git LFS)
-*.pt
+# Model files (use Git LFS for .pt files)
 *.params
 
 # Dataset
@@ -22,7 +21,6 @@ dataset/
 *_result.png
 
 # Config
-data.yaml
 .yaml
 
 # OS
@@ -33,3 +31,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Git LFS - force track .pt files
+# (handled by .gitattributes)
