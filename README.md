@@ -67,6 +67,17 @@ python train_yolo.py --batch-size 4 -j 4 --warmup-epochs 3
 **1.** One common problem when train yolo is gradient explosion, try more epoches to warmup or use smaller learning rate.  
 **2.** Much time spent on dataset loading with CPU, set "-j" number bigger if you have multi-core CPU and will improve train speed.  
 **3.** If train on Windows, sometimes program may blocked, see https://discuss.gluon.ai/t/topic/9388/11, if train on Linux make sure you have enough share memory.
+
+## 📖 环境搭建与使用指南
+
+详细的安装、配置和操作说明请参考：[SETUP.md](SETUP.md)
+
+包含内容：
+- 环境搭建（Anaconda + MXNet + GluonCV）
+- 模型下载与配置
+- GUI 图形界面使用
+- 命令行工具使用
+- 常见问题解答
 ## Demo
 <p align="center"> 
 <img src="https://github.com/njvisionpower/SafetyHelmetWearing-Dataset/blob/master/image/3_result.jpg" width = 50% height = 50%>
