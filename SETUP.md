@@ -243,4 +243,106 @@ pip install mxnet-cu101  # CUDA 10.1 版本
 
 ---
 
+## 🚀 YOLOv8 迁移指南 (性能升级)
+
+GluonCV YOLO3 推理速度较慢（3-8 FPS），迁移到 YOLOv8 可提升 **5-10 倍** 性能。
+
+### 适用场景
+
+- 视频/摄像头实时检测（目标 25+ FPS）
+- 训练时间充足（有 NVIDIA GPU）
+- 需要更高精度
+
+### 迁移文件清单
+
+| 文件 | 用途 | 执行位置 |
+|------|------|----------|
+| `convert_voc_to_yolo.py` | VOC 数据集 → YOLO 格式转换 | 笔记本 |
+| `train_yolov8.py` | YOLOv8 训练脚本 | 台式机 (3060) |
+| `test_yolov8.py` | YOLOv8 图片检测 | 笔记本 |
+| `test_yolov8_video.py` | YOLOv8 视频检测 | 笔记本 |
+| `gui_app_yolov8.py` | YOLOv8 GUI 图形界面 | 笔记本 |
+| `data.yaml` | Ultralytics 数据集配置 | 笔记本 → 台式机 |
+
+### 迁移步骤
+
+#### 步骤 1: 笔记本 - 数据集格式转换
+
+```bash
+# 确认 VOC 数据集路径
+# 修改 convert_voc_to_yolo.py 中的 VOC_ROOT 为实际路径（如 D:\VOCdevkit\VOC2028）
+
+# 运行转换
+python convert_voc_to_yolo.py --voc-root D:\VOCdevkit\VOC2028 --output dataset
+
+# 生成 dataset/ 和 data.yaml
+```
+
+#### 步骤 2: 传输文件到 3060 台式机
+
+将以下文件复制到台式机：
+- `dataset/` 目录
+- `data.yaml`
+- `train_yolov8.py`
+
+#### 步骤 3: 台式机 - 环境搭建
+
+```bash
+conda create -n yolov8-shwd python=3.10 -y
+conda activate yolov8-shwd
+
+# 安装 PyTorch CUDA 11.8
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+
+# 安装 Ultralytics
+pip install ultralytics opencv-python PyQt5 PyYAML tqdm
+
+# 验证 GPU
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+#### 步骤 4: 台式机 - 开始训练
+
+```bash
+python train_yolov8.py --data data.yaml --model yolov8s.pt --epochs 100 --batch 32 --device 0
+```
+
+**训练预估时间**: RTX 3060 上 100 epochs ≈ 2-4 小时
+
+#### 步骤 5: 传输模型回笔记本
+
+训练完成后，将 `runs/detect/shwd/weights/best.pt` 复制回笔记本。
+
+#### 步骤 6: 笔记本 - 使用 YOLOv8 推理
+
+```bash
+# 图片检测
+python test_yolov8.py --model best.pt --image 11.jpg
+
+# 视频检测
+python test_yolov8_video.py --model best.pt --video videos/3.mp4 --output result.avi
+
+# GUI 界面
+python gui_app_yolov8.py
+```
+
+### 性能对比
+
+| 场景 | GluonCV (mobilenet1.0) | YOLOv8 (s) |
+|------|------------------------|------------|
+| 图片检测 | 0.5-1s/张 | 0.05-0.1s/张 |
+| 视频 (1080p) | 3-5 FPS | 25-40 FPS |
+| 摄像头实时 | 2-4 FPS | 30+ FPS |
+
+### 环境要求对比
+
+| 组件 | GluonCV | YOLOv8 |
+|------|---------|--------|
+| Python | 3.7 | 3.10+ |
+| GPU | 可选 | 推荐 NVIDIA |
+| CUDA | 10.1+ | 11.8+ |
+| 训练时间 | 很长 | 较短 |
+
+---
+
 *最后更新：2026-06-02*
