@@ -25,7 +25,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
         # YOLOv8 模型参数
         self.model = None
-        self.model_path = 'runs/detect/shwd/weights/best.pt'
+        self.model_path = 'weights/best.pt'
         self.imgsz = 416
         self.conf_threshold = 0.4
         self.device = '0'  # GPU
