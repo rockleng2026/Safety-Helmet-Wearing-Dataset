@@ -1,0 +1,20 @@
+# ============================================
+# 人脸识别 GUI 依赖（face_gui.py / face_compare_*.py）
+# 适用于 Anaconda 环境: gluoncv-new (Python 3.7)
+# ============================================
+
+# 核心依赖
+insightface>=0.7.3
+onnxruntime>=1.14.1
+
+# 图像与数值计算
+opencv-python>=4.7.0.72
+numpy>=1.21.0,<1.24.0
+Pillow>=9.0.0
+
+# onnx 系列（insightface 内部需要）
+protobuf>=3.20.0
+onnx>=1.12.0
+
+# 可选：使用 GPU 加速时需要（CPU 环境可不装）
+# onnxruntime-gpu>=1.14.1

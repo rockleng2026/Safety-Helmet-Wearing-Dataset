@@ -1,0 +1,35 @@
+# ============================================
+# Safety-Helmet-Wearing-Dataset 工程完整依赖
+# 适用于 Anaconda 环境: gluoncv-new (Python 3.7)
+# ============================================
+
+# === 人脸识别模块 (face_gui.py, face_compare_*.py) ===
+insightface>=0.7.3
+onnxruntime>=1.14.1
+opencv-python>=4.7.0.72
+numpy>=1.21.0,<1.24.0
+Pillow>=9.0.0
+protobuf>=3.20.0
+onnx>=1.12.0
+
+# === YOLOv3 训练/推理模块 (train_yolo.py, test_yolo*.py) ===
+mxnet>=1.8.0
+gluoncv>=0.10.0
+matplotlib>=3.0
+
+# === PyQt5 GUI (gui_app.py) ===
+PyQt5==5.15.6
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.11.0
+
+# === YOLOv8 模块 (train_yolov8.py, test_yolov8*.py, gui_app_yolov8.py) ===
+# 注意：YOLOv8 需要 Python 3.10+，在 gluoncv-new (Python 3.7) 下不可用
+# 如需使用请新建环境：conda create -n yolov8 python=3.10
+# ultralytics>=8.0.0
+# torch>=2.0.0
+# torchvision>=0.15.0
+# PyYAML>=6.0
+# tqdm>=4.65.0
+
+# === 工具依赖 ===
+tqdm>=4.65.0
